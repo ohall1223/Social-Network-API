@@ -1,13 +1,13 @@
 const { Schema, model, Types } = require('mongoose');
 const moment = require('moment');
-const reactionSchema = require('./Reaction');
+const reactionsSchema = require('./Reaction');
 
-const thoughtSchema = new Schema (
+const thoughtsSchema = new Schema (
     {
         thoughtText: {
             type: String,
             required: true,
-            monlength: 1,
+            minlength: 1,
             maxlength: 280
         },
         createdAt: {
@@ -17,10 +17,11 @@ const thoughtSchema = new Schema (
         },
         username: {
             type: String,
-            required: true
+            required: true,
+            ref: 'User'
         },
         // tying reactions to thought
-        reactions: [reactionSchema]
+        reactions: [reactionsSchema]
     },
     {
         toJSON: {
@@ -32,12 +33,12 @@ const thoughtSchema = new Schema (
 );
 
 // get a total count of friends
-thoughtSchema.virtual('reactionCount').get(function () {
+thoughtsSchema.virtual('reactionCount').get(function () {
     return this.reactions.length;
 });
 
 // create the user model using the userSchema
-const Thought = model('Thought', thoughtSchema);
+const Thoughts = model('Thoughts', thoughtsSchema);
 
 // export the User model
-module.exports = { Thought };
+module.exports = { Thoughts };

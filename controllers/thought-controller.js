@@ -33,7 +33,8 @@ const thoughtController = {
     },
     // create a thought
     createThought({ params, body }, res) {
-        Thought.create(body)
+        console.log(body)
+        Thought.create(body.thoughtText)
             .then(({ _id }) => {
                 return User.findOneAndUpdate(
                     { username: body.username },

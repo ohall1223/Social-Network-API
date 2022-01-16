@@ -13,7 +13,7 @@ const usersSchema = new Schema (
             required: true,
             unique: true,
             // use REGEX to validate email 
-            match: [/^([a-z0-9_\.-]+)A([\da-z\.-]+)\.([a-z\.]{2,6})$/]
+            match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please enter a valid email address']
         },
         thoughts: [{
             type: Schema.Types.ObjectId,
