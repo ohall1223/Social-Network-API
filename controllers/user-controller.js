@@ -36,8 +36,10 @@ const userController = {
     },
     // create a new user
     createUser({ body }, res) {
+        console.log(body)
         Users.create(body)
         .then(dbUserData => res.json(dbUserData))
+        // console.log(dbUserData)
         .catch(err => res.status(400).json(err));
     },
     // update user info by id
@@ -67,8 +69,9 @@ const userController = {
     },
     // add a friend to a user
     addFriend({ params }, res) {
+        console.log(params.id)
         Users.findOneAndUpdate(
-            {_id: params.userId},
+            {_id: params.id},
             { $push: {friends: params.friendId }},
             { new: true, runValidators: true}
         )
