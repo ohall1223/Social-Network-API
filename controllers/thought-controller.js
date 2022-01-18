@@ -34,13 +34,12 @@ const thoughtController = {
         })
     },
     // create a thought
-    createThoughts({params, body}, res) {
-        console.log(body)
-        console.log(params)
-        Thought.create(body)
-        // .then(({_id}) => {
-        //     return Users.findOneAndUpdate({ _id: params.id}, {$push: {thoughts: _id }}, {new: true});
-        // })
+    createThoughts(req, res) {
+        console.log(req.body)
+        Thought.create(req.body)
+        .then(({_id}) => {
+            return Users.findOneAndUpdate({ _id: req.params.id}, {$push: {thoughts: req.body.thoughtText }}, {new: true});
+        })
         .then(dbThoughtsData => {
             if(!dbThoughtsData) {
                 res.status(404).json({message: 'No thought found with this Id'});
